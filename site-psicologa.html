@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site para Psicólogas — Template</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     PALETA — troque estas 6 variáveis para adaptar a outra
+     profissional. Todo o resto do CSS usa apenas estes tokens.
+     ============================================================ */
+  :root{
+    --lilac-bg:      #F4EEFB;   /* fundo principal, lilás quase branco  */
+    --lilac-bg-soft: #EDE3F8;   /* fundo alternado das seções            */
+    --plum-deep:     #4A3B66;   /* títulos e texto de destaque           */
+    --purple-mid:    #8B72B8;   /* elementos de apoio, ícones            */
+    --lavender:      #C9B6ED;   /* acento principal (botões, bordas)     */
+    --blush:         #F2D9E6;   /* acento secundário, detalhes quentes   */
+    --paper:         #FFFFFF;   /* cartões                               */
+    --ink-soft:      #6B6079;   /* texto secundário                     */
+
+    --font-display: "Fraunces", serif;
+    --font-body: "Sora", sans-serif;
+
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --shadow-soft: 0 20px 45px -20px rgba(74,59,102,0.28);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    font-family:var(--font-body);
+    background:var(--lilac-bg);
+    color:var(--plum-deep);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img{ max-width:100%; display:block; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  .eyebrow{
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--purple-mid);
+    font-weight:600;
+    margin-bottom:14px;
+    display:block;
+  }
+
+  h1,h2,h3{
+    font-family:var(--font-display);
+    font-weight:500;
+    color:var(--plum-deep);
+    letter-spacing:-0.01em;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(244,238,251,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(139,114,184,0.15);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 24px;
+    max-width:1080px; margin:0 auto;
+  }
+  .brand{
+    font-family:var(--font-display);
+    font-size:1.25rem;
+    font-weight:600;
+    color:var(--plum-deep);
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand-mark{
+    width:34px; height:34px; border-radius:50%;
+    background:linear-gradient(135deg,var(--lavender),var(--blush));
+  }
+  .nav-links{ display:flex; gap:32px; font-size:0.92rem; }
+  .nav-links a{ color:var(--ink-soft); transition:color .2s; }
+  .nav-links a:hover{ color:var(--plum-deep); }
+  .nav-cta{
+    background:var(--plum-deep); color:#fff !important;
+    padding:10px 20px; border-radius:999px;
+    font-size:0.88rem; font-weight:500;
+  }
+  .nav-toggle{ display:none; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:88px 0 100px;
+  }
+  .hero-blob{
+    position:absolute;
+    width:640px; height:640px;
+    right:-180px; top:-160px;
+    border-radius:52% 48% 60% 40% / 45% 55% 45% 55%;
+    background:radial-gradient(circle at 35% 30%, var(--blush), var(--lavender) 60%, transparent 75%);
+    opacity:0.55;
+    filter:blur(2px);
+    animation:breathe 12s ease-in-out infinite;
+    z-index:0;
+  }
+  @keyframes breathe{
+    0%,100%{ transform:scale(1) rotate(0deg); border-radius:52% 48% 60% 40% / 45% 55% 45% 55%; }
+    50%{ transform:scale(1.06) rotate(6deg); border-radius:44% 56% 42% 58% / 55% 40% 60% 45%; }
+  }
+  @media (prefers-reduced-motion:reduce){ .hero-blob{ animation:none; } }
+
+  .hero-grid{
+    position:relative; z-index:1;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(2.3rem, 4vw, 3.4rem);
+    line-height:1.12;
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--purple-mid);
+  }
+  .hero p.lead{
+    font-size:1.08rem;
+    color:var(--ink-soft);
+    max-width:46ch;
+    margin-bottom:32px;
+  }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 26px;
+    border-radius:999px;
+    font-size:0.94rem; font-weight:500;
+    transition:transform .2s ease, box-shadow .2s ease;
+    border:1px solid transparent;
+  }
+  .btn:focus-visible{ outline:3px solid var(--purple-mid); outline-offset:3px; }
+  .btn-primary{
+    background:var(--plum-deep); color:#fff;
+    box-shadow:var(--shadow-soft);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); }
+  .btn-ghost{
+    background:transparent; color:var(--plum-deep);
+    border-color:var(--purple-mid);
+  }
+  .btn-ghost:hover{ background:var(--paper); }
+
+  .hero-portrait{
+    position:relative;
+    justify-self:center;
+  }
+  .portrait-frame{
+    width:100%; max-width:340px;
+    aspect-ratio:4/5;
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    box-shadow:var(--shadow-soft);
+    background:linear-gradient(160deg,var(--lavender),var(--blush));
+    position:relative;
+  }
+  .portrait-frame img{ width:100%; height:100%; object-fit:cover; }
+  .credential-chip{
+    position:absolute; bottom:-18px; left:-18px;
+    background:var(--paper);
+    padding:12px 18px;
+    border-radius:var(--radius-md);
+    box-shadow:var(--shadow-soft);
+    font-size:0.82rem;
+    color:var(--ink-soft);
+  }
+  .credential-chip strong{ color:var(--plum-deep); display:block; font-size:0.9rem; }
+
+  /* ---------- section shells ---------- */
+  section{ padding:90px 0; }
+  .section-alt{ background:var(--lilac-bg-soft); }
+  .section-head{ max-width:640px; margin-bottom:48px; }
+  .section-head h2{ font-size:clamp(1.8rem,2.6vw,2.4rem); }
+  .section-head p{ color:var(--ink-soft); margin-top:14px; }
+
+  /* ---------- sobre ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:0.7fr 1.3fr;
+    gap:56px;
+    align-items:flex-start;
+  }
+  .about-quote{
+    font-family:var(--font-display);
+    font-style:italic;
+    font-size:1.3rem;
+    color:var(--plum-deep);
+    border-left:3px solid var(--lavender);
+    padding-left:22px;
+  }
+  .about-body p{ color:var(--ink-soft); margin-bottom:16px; }
+  .about-body p:last-child{ margin-bottom:0; }
+
+  .credentials-list{
+    margin-top:28px;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .credentials-list li{
+    display:flex; gap:10px; align-items:flex-start;
+    font-size:0.94rem; color:var(--ink-soft);
+  }
+  .credentials-list li::before{
+    content:"";
+    width:6px; height:6px; margin-top:8px; flex:none;
+    border-radius:50%; background:var(--purple-mid);
+  }
+
+  /* ---------- especialidades ---------- */
+  .tag-grid{
+    display:flex; flex-wrap:wrap; gap:12px;
+  }
+  .tag{
+    background:var(--paper);
+    border:1px solid rgba(139,114,184,0.25);
+    padding:10px 20px;
+    border-radius:999px;
+    font-size:0.9rem;
+    color:var(--plum-deep);
+  }
+
+  /* ---------- abordagem / cards ---------- */
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .card{
+    background:var(--paper);
+    padding:32px 26px;
+    border-radius:var(--radius-md);
+    box-shadow:var(--shadow-soft);
+  }
+  .card .num{
+    font-family:var(--font-display);
+    font-size:1.6rem;
+    color:var(--lavender);
+    margin-bottom:14px;
+  }
+  .card h3{ font-size:1.1rem; margin-bottom:10px; }
+  .card p{ color:var(--ink-soft); font-size:0.93rem; }
+
+  /* ---------- serviços / preços ---------- */
+  .service-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:22px 0;
+    border-bottom:1px solid rgba(139,114,184,0.2);
+  }
+  .service-row:first-child{ border-top:1px solid rgba(139,114,184,0.2); }
+  .service-name{ font-weight:500; }
+  .service-desc{ color:var(--ink-soft); font-size:0.9rem; margin-top:4px; }
+  .service-price{
+    font-family:var(--font-display);
+    color:var(--purple-mid);
+    white-space:nowrap;
+    margin-left:24px;
+  }
+  .price-note{ margin-top:18px; font-size:0.85rem; color:var(--ink-soft); }
+
+  /* ---------- contato ---------- */
+  .contact-panel{
+    background:linear-gradient(135deg,var(--plum-deep),#5C4A82);
+    color:#fff;
+    border-radius:var(--radius-lg);
+    padding:56px;
+    display:grid;
+    grid-template-columns:1.2fr 0.8fr;
+    gap:40px;
+    align-items:center;
+  }
+  .contact-panel h2{ color:#fff; }
+  .contact-panel p{ color:rgba(255,255,255,0.78); margin-top:12px; max-width:44ch; }
+  .contact-panel .btn-primary{ background:#fff; color:var(--plum-deep); }
+  .contact-info{ display:flex; flex-direction:column; gap:16px; }
+  .contact-info a{ font-size:0.95rem; opacity:0.9; }
+  .contact-info a:hover{ opacity:1; }
+  .contact-info span{ font-size:0.78rem; opacity:0.65; text-transform:uppercase; letter-spacing:0.08em; }
+
+  /* ---------- footer ---------- */
+  footer{ padding:40px 0; }
+  .footer-row{
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:12px;
+    font-size:0.82rem; color:var(--ink-soft);
+  }
+
+  /* ---------- responsivo ---------- */
+  @media (max-width:860px){
+    .nav-links{ display:none; }
+    .hero-grid, .about-grid, .contact-panel{ grid-template-columns:1fr; }
+    .hero-portrait{ order:-1; }
+    .card-grid{ grid-template-columns:1fr; }
+    .contact-panel{ padding:36px 26px; }
+    .hero-blob{ width:420px; height:420px; right:-140px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="brand"><span class="brand-mark"></span><span id="brand-name">Nome da Psicóloga</span></div>
+    <div class="nav-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#especialidades">Especialidades</a>
+      <a href="#abordagem">Abordagem</a>
+      <a href="#servicos">Serviços</a>
+    </div>
+    <a class="nav-cta" id="nav-cta-link" href="#contato">Agendar sessão</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-blob" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow" id="hero-eyebrow">Psicologia clínica</span>
+        <h1 id="hero-heading">Um espaço para <em>respirar</em>, se ouvir e se compreender</h1>
+        <p class="lead" id="hero-lead"></p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" id="hero-cta-primary" href="#contato">Agendar uma conversa</a>
+          <a class="btn btn-ghost" href="#sobre">Conhecer o trabalho</a>
+        </div>
+      </div>
+      <div class="hero-portrait">
+        <div class="portrait-frame">
+          <img id="hero-photo" src="" alt="">
+        </div>
+        <div class="credential-chip">
+          <strong id="chip-crp">CRP 00/00000</strong>
+          <span id="chip-location">Cidade, Estado</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="wrap about-grid">
+      <div>
+        <span class="eyebrow">Sobre mim</span>
+        <p class="about-quote" id="about-quote"></p>
+      </div>
+      <div class="about-body">
+        <div id="about-text"></div>
+        <ul class="credentials-list" id="credentials-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESPECIALIDADES -->
+  <section class="section-alt" id="especialidades">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Especialidades</span>
+        <h2>Temas que trabalhamos juntas</h2>
+        <p>Cada processo é único — estes são alguns dos caminhos mais comuns que trago no consultório.</p>
+      </div>
+      <div class="tag-grid" id="specialty-tags"></div>
+    </div>
+  </section>
+
+  <!-- ABORDAGEM -->
+  <section id="abordagem">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Como trabalho</span>
+        <h2>Uma escuta acolhedora, passo a passo</h2>
+      </div>
+      <div class="card-grid" id="approach-cards"></div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section class="section-alt" id="servicos">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Serviços e valores</span>
+        <h2>Sessões pensadas para o seu momento</h2>
+      </div>
+      <div id="service-list"></div>
+      <p class="price-note" id="price-note"></p>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="wrap">
+      <div class="contact-panel">
+        <div>
+          <h2>Dar o primeiro passo já é um ato de cuidado</h2>
+          <p id="contact-text"></p>
+          <div class="hero-actions" style="margin-top:26px;">
+            <a class="btn btn-primary" id="contact-cta" href="#" target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+          </div>
+        </div>
+        <div class="contact-info">
+          <div><span>Endereço</span><br><a id="contact-address" href="#"></a></div>
+          <div><span>E-mail</span><br><a id="contact-email" href="#"></a></div>
+          <div><span>Instagram</span><br><a id="contact-instagram" href="#" target="_blank" rel="noopener"></a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span id="footer-name"></span>
+    <span id="footer-disclaimer">Este site tem caráter informativo e não substitui uma avaliação clínica.</span>
+  </div>
+</footer>
+
+<script>
+/* ================================================================
+   CONFIG — este é o ÚNICO bloco que outra psicóloga precisa editar
+   para reaproveitar o site. Nenhum texto fica fixo no HTML/CSS:
+   tudo é lido daqui e injetado no DOM abaixo.
+   ================================================================ */
+const CONFIG = {
+  nome: "Júlia Pereira",
+  crp: "CRP 04/51695",
+  cidade: "Belo Horizonte, MG",
+  endereco: "R. Marquês de Paranaguá, 351 — Santo Antônio, Belo Horizonte",
+
+  hero: {
+    eyebrow: "Psicóloga clínica",
+    // use <em>palavra</em> para destacar um trecho do título
+    titulo: "Um espaço seguro para <em>se ouvir</em> e se compreender",
+    texto: "Sessões individuais para adultos, adolescentes e idosos, com escuta acolhedora e uma relação terapêutica viva e autêntica.",
+    fotoUrl: "https://br.mundopsicologos.com/site/company/5a/434444/logo/julia-pereira_li1.png",
+    fotoAlt: "Foto de Júlia Pereira, psicóloga clínica"
+  },
+
+  sobre: {
+    frase: "Buscar orientação é um sinal de coragem.",
+    paragrafos: [
+      "Sou psicóloga clínica e, com os anos de experiência na clínica, acredito que um espaço seguro para a escuta e o acolhimento humano são ferramentas potentes para lidar com angústias tão presentes no dia a dia.",
+      "Meu principal trabalho é criar uma relação terapêutica viva, autêntica e capaz de trazer maior compreensão de si em relação aos fenômenos que podem causar sofrimento.",
+      "Minha prática, mais do que terapia, é um espaço de crescimento. Vamos dar esse passo juntas."
+    ],
+    formacao: [
+      "Graduação em Psicologia — Pontifícia Universidade Católica de Minas Gerais",
+      "Formação em Psicologia Fenomenológica-Existencial",
+      "Atualização contínua em saúde mental"
+    ]
+  },
+
+  especialidades: [
+    "Ansiedade", "Autoestima", "Dependência emocional",
+    "Depressão", "TDAH", "Traumas", "Psicanálise"
+  ],
+
+  abordagem: [
+    {
+      titulo: "Primeiro contato",
+      texto: "Uma conversa inicial para entender sua história e o que te trouxe até aqui, sem julgamentos."
+    },
+    {
+      titulo: "Construção do vínculo",
+      texto: "As sessões seguem em ritmo próprio, criando um espaço de confiança para explorar o que precisa ser dito."
+    },
+    {
+      titulo: "Caminhar junto",
+      texto: "Acompanhamento contínuo, revisitando objetivos conforme sua compreensão de si vai se transformando."
+    }
+  ],
+
+  servicos: [
+    { nome: "Sessão individual", desc: "40 minutos a 1 hora · presencial", preco: "R$100 – R$200" }
+  ],
+  notaPreco: "Valores orientativos. Consulte condições e disponibilidade diretamente comigo.",
+
+  contato: {
+    texto: "Atendo presencialmente em Belo Horizonte. Entre em contato para verificar horários disponíveis.",
+    whatsapp: "https://wa.me/5500000000000",
+    email: "contato@juliapereira.com.br",
+    instagram: "https://instagram.com/",
+    instagramLabel: "@juliapereira.psi"
+  }
+};
+
+/* ================================================================
+   RENDER — lê o CONFIG acima e preenche o HTML. Não precisa
+   editar nada daqui para baixo ao reaproveitar o template.
+   ================================================================ */
+function render(cfg){
+  document.title = cfg.nome + " — Psicóloga";
+  document.getElementById('brand-name').textContent = cfg.nome;
+  document.getElementById('footer-name').textContent = "© " + new Date().getFullYear() + " " + cfg.nome + " · " + cfg.crp;
+
+  // hero
+  document.getElementById('hero-eyebrow').textContent = cfg.hero.eyebrow;
+  document.getElementById('hero-heading').innerHTML = cfg.hero.titulo;
+  document.getElementById('hero-lead').textContent = cfg.hero.texto;
+  document.getElementById('hero-photo').src = cfg.hero.fotoUrl;
+  document.getElementById('hero-photo').alt = cfg.hero.fotoAlt;
+  document.getElementById('chip-crp').textContent = cfg.crp;
+  document.getElementById('chip-location').textContent = cfg.cidade;
+  document.getElementById('hero-cta-primary').href = "#contato";
+  document.getElementById('nav-cta-link').href = "#contato";
+
+  // sobre
+  document.getElementById('about-quote').textContent = "\u201C" + cfg.sobre.frase + "\u201D";
+  document.getElementById('about-text').innerHTML = cfg.sobre.paragrafos.map(p => `<p>${p}</p>`).join('');
+  document.getElementById('credentials-list').innerHTML = cfg.sobre.formacao.map(f => `<li>${f}</li>`).join('');
+
+  // especialidades
+  document.getElementById('specialty-tags').innerHTML = cfg.especialidades.map(e => `<span class="tag">${e}</span>`).join('');
+
+  // abordagem
+  document.getElementById('approach-cards').innerHTML = cfg.abordagem.map((a,i) => `
+    <div class="card">
+      <div class="num">0${i+1}</div>
+      <h3>${a.titulo}</h3>
+      <p>${a.texto}</p>
+    </div>`).join('');
+
+  // serviços
+  document.getElementById('service-list').innerHTML = cfg.servicos.map(s => `
+    <div class="service-row">
+      <div>
+        <div class="service-name">${s.nome}</div>
+        <div class="service-desc">${s.desc}</div>
+      </div>
+      <div class="service-price">${s.preco}</div>
+    </div>`).join('');
+  document.getElementById('price-note').textContent = cfg.notaPreco;
+
+  // contato
+  document.getElementById('contact-text').textContent = cfg.contato.texto;
+  document.getElementById('contact-cta').href = cfg.contato.whatsapp;
+  document.getElementById('contact-address').textContent = cfg.endereco;
+  document.getElementById('contact-address').href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(cfg.endereco);
+  document.getElementById('contact-email').textContent = cfg.contato.email;
+  document.getElementById('contact-email').href = "mailto:" + cfg.contato.email;
+  document.getElementById('contact-instagram').textContent = cfg.contato.instagramLabel;
+  document.getElementById('contact-instagram').href = cfg.contato.instagram;
+}
+
+render(CONFIG);
+</script>
+
+</body>
+</html>
